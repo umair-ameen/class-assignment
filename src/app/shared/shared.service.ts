@@ -11,14 +11,6 @@ export class SharedService {
         
     }
 
-    fstore(url, data) {
-        var newKey: string = firebase.database().ref(url).push().key;
-        url = url + newKey;
-        firebase.database().ref(url).update(data);        
-    
-    
-    }
-
     save(url, data) {
         console.log('Url from store: ', url)
         return firebase.database().ref(url).update(data);

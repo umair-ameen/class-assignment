@@ -9,6 +9,8 @@ export class AuthService {
     uid: string = '';
     emailError: any;
     loginError: string = '';
+    isStudent: boolean = false;
+    isTeacher: boolean = false;
 
     constructor(public router: Router, public sharedService: SharedService) { }
 
@@ -58,9 +60,9 @@ export class AuthService {
             });
             firebase.database().ref('examiners/' + uid).set({
                 examinerCap: false
-            }).then( () => {
-                    this.router.navigate(['/login'])
-                }
+            }).then(() => {
+                this.router.navigate(['/login'])
+            }
             );
         }
     }
@@ -85,7 +87,60 @@ export class AuthService {
                 this.loginError = error.code;
                 console.log(error)
             }
-
         )
+    }
+
+    verifyStudent() {
+        const promise = new Promise(
+            (resolve, reject) => {
+                firebase.auth().onAuthStateChanged(function (user) {
+                    let isStudent: boolean = false;
+                    if (user) {
+                        let uid = firebase.auth().currentUser.uid;
+                        let url: string = 'users/' + uid;
+                        firebase.database().ref(url).once('value').then(
+                            (response) => {
+                                // if (response.val() !== null && response.val() !== undefined) {
+                                let userData = response.val();
+                                if (userData.role == 'student') {
+                                    isStudent = true;
+                                    resolve(isStudent);
+                                }
+                            }
+                        )
+                    }else{
+                        resolve(isStudent)
+                    }
+                });
+            }
+        )
+        return promise;
+    }
+
+    verifyTeacher() {
+        const promise = new Promise(
+            (resolve, reject) => {
+                firebase.auth().onAuthStateChanged(function (user) {
+                    let isTeacher: boolean = false;
+                    if (user) {
+                        let uid = firebase.auth().currentUser.uid;
+                        let url: string = 'users/' + uid;
+                        firebase.database().ref(url).once('value').then(
+                            (response) => {
+                                // if (response.val() !== null && response.val() !== undefined) {
+                                let userData = response.val();
+                                if (userData.role == 'teacher') {
+                                    isTeacher = true;
+                                    resolve(isTeacher);
+                                }
+                            }
+                        )
+                    }else{
+                        resolve(isTeacher)
+                    }
+                });
+            }
+        )
+        return promise;
     }
 }

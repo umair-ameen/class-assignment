@@ -20,6 +20,8 @@ import { ObtainTestComponent } from './student/tests/obtain-test/obtain-test.com
 import { HomeComponent } from './home/home.component';
 import { StudentComponent } from './student/student.component';
 import { SharedService } from './shared/shared.service';
+import { AuthGuardTeacher } from './shared/auth-guard-teacher.service';
+import { AuthGuardStudent } from './shared/auth-guard-student.service';
 
 
 @NgModule({
@@ -46,7 +48,7 @@ import { SharedService } from './shared/shared.service';
     HttpModule,
     NgbModule.forRoot()
   ],
-  providers: [AuthService, SharedService],
+  providers: [AuthService, SharedService, AuthGuardTeacher, AuthGuardStudent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

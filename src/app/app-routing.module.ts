@@ -12,15 +12,17 @@ import { ResultsComponent } from './shared/results/results.component';
 import { HomeComponent } from './home/home.component'
 import { StudentComponent } from './student/student.component';
 import { CreateSubjectComponent } from './examiner/create-subject/create-subject.component';
+import { AuthGuardTeacher } from './shared/auth-guard-teacher.service';
+import { AuthGuardStudent } from './shared/auth-guard-student.service';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent},
-    { path: 'examiner', component: ExaminerComponent, children:[
+    { path: 'examiner', canActivate: [AuthGuardTeacher], component: ExaminerComponent, children:[
         { path: 'subjects', component: CreateSubjectComponent },
         { path: 'schedule-test', component: ScheduleTestComponent },
         { path: 'results', component: ResultsComponent }
     ]},
-    { path: 'student', component: StudentComponent , children:[
+    { path: 'student', canActivate: [AuthGuardStudent], component: StudentComponent , children:[
         { path: 'tests', component: TestsComponent },
         { path: 'obtain-test', component: ObtainTestComponent},
         { path: 'results', component: ResultsComponent }
