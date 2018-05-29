@@ -12,7 +12,6 @@ export class AuthGuardStudent implements CanActivate{
         return this.authService.verifyStudent().then(
             (verifiedSt: boolean) => {
                 if(verifiedSt){
-                    console.log('You are a student')
                     return true;
                 }else{
                     console.log('Intrussion detected')

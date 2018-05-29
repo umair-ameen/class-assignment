@@ -165,7 +165,6 @@ export class ObtainTestComponent implements OnInit {
       console.log('URL before update', url)
       let result = { rollNo: this.userData.rollNo, name: userName, score: this.userScore }
       this.condition = 'result';
-      this.testStatus = this.userScore + ' mark(s)';
       this.sharedService.update(url, result);
     }
     form.reset();
@@ -192,6 +191,7 @@ export class ObtainTestComponent implements OnInit {
       console.log('Added to passBox');
     }
   }
+
   startpassBox() {
     this.test.mcqs = this.passBox;
     console.log('passBox Started: ', this.test.mcqs);

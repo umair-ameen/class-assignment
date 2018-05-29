@@ -12,7 +12,6 @@ export class AuthGuardTeacher implements CanActivate{
         return this.authService.verifyTeacher().then(
             (verified: boolean) => {
                 if(verified){
-                    console.log('You are a Teacher')
                     return true;
                 }else{
                     console.log('Intrussion detected')

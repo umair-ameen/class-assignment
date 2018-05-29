@@ -13,6 +13,7 @@ export class HeaderComponent implements OnInit {
   userName: string = 'User';
   role: string = '';
   show:boolean = false;
+  navbarCollapsed: boolean = false;
   constructor(private sharedService: SharedService, private router: Router) {}
   
   ngOnInit() {

@@ -45,7 +45,8 @@
 
       <h3 class="text-center">MCQs:</h3>
 
-      <div formArrayName="mcqs" *ngFor=" let question of testForm.get('mcqs').controls; let i = index;">
+      <div formArrayName="mcqs" *ngFor=" let question of testForm.controls.mcqs['controls']; let i = index;"> 
+        <!-- testForm.get('mcqs').controls; -->
         <div [formGroupName]="i">
           <div class="form-group">
             <input type="text" placeholder="{{i+1}}. Question" formControlName="question" class="form-control">

@@ -144,7 +144,7 @@ export class ScheduleTestComponent implements OnInit {
       test.subjectName = this.selectedBatchSubjects[test.subjectKey].name;
       console.log('Complete Test: ', test);
       let url: string = 'batches/' + this.selectedBatchString + '/tests/' + test.subjectKey;
-      this.sharedService.update(url, test);
+      // this.sharedService.update(url, test);
       this.success = true;
       this.testForm.reset();
     }else{
