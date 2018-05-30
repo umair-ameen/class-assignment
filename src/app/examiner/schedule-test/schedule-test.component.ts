@@ -18,11 +18,12 @@ export class ScheduleTestComponent implements OnInit {
   selectedBatchSubjects: any[] = [];
   subjectsArray: string[] = [];
   subjectKeys: string[] = [];
-  selectedSubjectKey: string;
+  selectedSubjectKey: string = '';
   dateTimeISO: string = '';
   dateTimeUTC: string = '';
   testForm: FormGroup;
   mcqs: any = [];
+  uid: string = '';
   exp: string = '';
   error: string = '';
   success: boolean = false;
@@ -46,6 +47,15 @@ export class ScheduleTestComponent implements OnInit {
       'mcqs': this.formBuilder.array([this.createMcq()])
     });
     this.getDateTime();
+    firebase.auth().onAuthStateChanged(
+      (user) => {
+        if(user){
+          this.uid = user.uid;
+        }else{
+          console.log('Please login');
+        }
+      }
+    )
 
   }
 
@@ -53,7 +63,7 @@ export class ScheduleTestComponent implements OnInit {
     return new Promise(
       (resolve, reject) => {
         let xmlhttp = new XMLHttpRequest();
-        xmlhttp.open("HEAD", "http://www.googleapis.com", true);
+        xmlhttp.open("HEAD", "https://www.googleapis.com", true);
         xmlhttp.onreadystatechange = () => {
           if (xmlhttp.readyState == 4) {
             this.dateTimeUTC = xmlhttp.getResponseHeader("Date");
@@ -115,6 +125,7 @@ export class ScheduleTestComponent implements OnInit {
         (response) => {
           let data = response;
           if (data != undefined) {
+            console.log('subjects data: ', data)
             this.selectedBatchSubjects = data;
             this.subjectsArray = (Object).values(this.selectedBatchSubjects);
             this.subjectKeys = Object.keys(this.selectedBatchSubjects);
@@ -137,18 +148,18 @@ export class ScheduleTestComponent implements OnInit {
   onTestSchedule() {
     this.error = '';
     this.success = false;
-    if (this.testForm.valid) {
+    if (this.testForm.valid && this.selectedBatchSubjects[this.selectedSubjectKey].teacherUid == this.uid) {
       let test = this.testForm.value;
       test.dateTime = this.dateTimeUTC;
       test.subjectKey = this.selectedSubjectKey;
       test.subjectName = this.selectedBatchSubjects[test.subjectKey].name;
       console.log('Complete Test: ', test);
       let url: string = 'batches/' + this.selectedBatchString + '/tests/' + test.subjectKey;
-      // this.sharedService.update(url, test);
+      this.sharedService.update(url, test);
       this.success = true;
       this.testForm.reset();
     }else{
-      this.error = 'Test information not filled properly.'
+      this.error = 'Test information not filled properly or the selected subject does not belong to you!';
     }
   }
 }

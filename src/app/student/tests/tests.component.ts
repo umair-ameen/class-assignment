@@ -66,7 +66,7 @@ export class TestsComponent implements OnInit {
     return new Promise(
       (resolve, reject) => {
         let xmlhttp = new XMLHttpRequest();
-        xmlhttp.open("HEAD", "http://www.googleapis.com", true);
+        xmlhttp.open("HEAD", "https://www.googleapis.com", true);
         xmlhttp.onreadystatechange = () => {
           if (xmlhttp.readyState == 4) {
             let dateTimeGoogle: string = xmlhttp.getResponseHeader("Date");

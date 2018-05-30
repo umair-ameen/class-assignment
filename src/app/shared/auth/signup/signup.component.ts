@@ -18,7 +18,7 @@ export class SignupComponent implements OnInit {
   rollNos: string[] = [];
   emailError: string = '';
   passwordError: string = '';
-
+  rollNoError: string = '';
   constructor(private authService: AuthService, private sharedService: SharedService) { }
 
   ngOnInit() {
@@ -45,7 +45,11 @@ export class SignupComponent implements OnInit {
   }
 
   onSignup(form: NgForm) {
+
     let userInfo = form.value;
+    this.emailError = '';
+    this.passwordError = '';
+    this.rollNoError = '';
     delete userInfo.terms;
     let length = this.rollNos.length - 1;
     if (this.role == 'student') {
@@ -54,14 +58,15 @@ export class SignupComponent implements OnInit {
       for (let i = 0; i <= length; i++) {
         if (this.rollNos[i] == userInfo.rollNo) {
           console.log('Roll No already exists');
+          this.rollNoError = 'Roll No already exists!';
         } else if (this.rollNos[i] != userInfo.rollNo) {
           console.log('Signing up student');
           this.authService.signupUser(userInfo).then(
             () => {
               if (this.authService.emailError == 'auth/email-already-in-use') {
-                this.emailError = 'The email address is already in use by another account.';
+                this.emailError = 'This email address is already in use by another account!';
               } else if (this.authService.emailError == 'auth/weak-password') {
-                this.passwordError = 'Password should be at least 6 characters';
+                this.passwordError = 'Password should be at least 6 characters long';
               } else {
                 this.emailError = '';
               }

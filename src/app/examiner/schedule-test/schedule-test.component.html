@@ -45,7 +45,7 @@
 
       <h3 class="text-center">MCQs:</h3>
 
-      <div formArrayName="mcqs" *ngFor=" let question of testForm.controls.mcqs['controls']; let i = index;"> 
+      <div formArrayName="mcqs" *ngFor=" let question of testForm.controls.mcqs['controls']; let i = index;" class="mcqSet"> 
         <!-- testForm.get('mcqs').controls; -->
         <div [formGroupName]="i">
           <div class="form-group">
@@ -78,7 +78,6 @@
               </select>
             </div>
           </div>
-          <hr>
         </div>
       </div>
       <small class="form-text text-danger" *ngIf="error!=''">{{error}}</small>

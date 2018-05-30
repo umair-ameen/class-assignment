@@ -60,6 +60,7 @@
                       <label>Number</label>
                       <input type="number" class="form-control" name="number" required min="1" max="60" #rn="ngModel" ngModel>
                       <small class="form-text text-danger" *ngIf="rn.touched && rn.invalid">Please provide the last digit of your roll no.</small>
+                      <small class="form-text text-danger" *ngIf="rollNoError!=''">{{rollNoError}}</small>
                     </div>
                   </div>
                 </div>
