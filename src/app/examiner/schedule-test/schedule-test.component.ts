@@ -21,6 +21,7 @@ export class ScheduleTestComponent implements OnInit {
   selectedSubjectKey: string = '';
   dateTimeISO: string = '';
   dateTimeUTC: string = '';
+  dateTimeEndUTC: string = '';
   testForm: FormGroup;
   mcqs: any = [];
   uid: string = '';
@@ -42,6 +43,7 @@ export class ScheduleTestComponent implements OnInit {
       'subjectName': new FormControl(this.subjectsArray, Validators.required),
       'subjectKey': new FormControl(null),
       'dateTime': new FormControl(this.dateTimeISO, Validators.required),
+      'dateTimeEnd': new FormControl(this.dateTimeISO, Validators.required),
       'duration': new FormControl(null, Validators.required),
       'marks': new FormControl(null, Validators.required),
       'mcqs': this.formBuilder.array([this.createMcq()])
@@ -86,6 +88,13 @@ export class ScheduleTestComponent implements OnInit {
     let date: string = new Date(event.target.value).toUTCString();
     this.dateTimeUTC = date;
     console.log('ISO to UTC', this.dateTimeUTC);
+  }
+
+  dateTimeEndChange(dateChangeEvent){
+    console.log('Event Target: ', dateChangeEvent.target.value);
+    let date: string = new Date(dateChangeEvent.target.value).toUTCString();
+    this.dateTimeEndUTC = date;
+    console.log('ISO to UTC', this.dateTimeEndUTC);
   }
 
   createMcq(): FormGroup {
@@ -151,6 +160,7 @@ export class ScheduleTestComponent implements OnInit {
     if (this.testForm.valid && this.selectedBatchSubjects[this.selectedSubjectKey].teacherUid == this.uid) {
       let test = this.testForm.value;
       test.dateTime = this.dateTimeUTC;
+      test.dateTimeEnd = this.dateTimeEndUTC;
       test.subjectKey = this.selectedSubjectKey;
       test.subjectName = this.selectedBatchSubjects[test.subjectKey].name;
       console.log('Complete Test: ', test);

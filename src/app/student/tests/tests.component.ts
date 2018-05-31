@@ -85,7 +85,8 @@ export class TestsComponent implements OnInit {
   fetchTest() {
     this.testStatus = 'Loading...';
     this.tests = [];
-    let dateTimeTest: Date;
+    let dateTimeTestStart: Date;
+    let dateTimeTestEnd: Date;
     let url: string = 'batches/' + this.userData.batch + '/tests';
     this.sharedService.getData(url).subscribe(
       (response) => {
@@ -96,8 +97,9 @@ export class TestsComponent implements OnInit {
           this.testStatus = 'Please obtain the tests below...';
           let keys = Object.keys(this.testData);
           keys.forEach((testKey) => {
-            dateTimeTest = new Date(this.testData[testKey].dateTime);
-            if(this.dateTimeCurrent.getTime() > dateTimeTest.getTime()){
+            dateTimeTestStart = new Date(this.testData[testKey].dateTime);
+            dateTimeTestEnd = new Date(this.testData[testKey].dateTimeEnd);
+            if(this.dateTimeCurrent.getTime() > dateTimeTestStart.getTime() && this.dateTimeCurrent.getTime() < dateTimeTestEnd.getTime()){
               this.testData[testKey].obtainable = true;
             }else{
               this.testData[testKey].obtainable = false;

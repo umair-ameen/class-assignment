@@ -24,8 +24,12 @@
         </div>
         <div class="row">
           <div class="form-group col-md-6">
-            <label for="date-time">Date and Time:</label>
+            <label for="date-time">Date and Time (Start):</label>
             <input class="form-control" type="datetime-local" formControlName="dateTime" (change)="dateTimeChange($event)">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="date-time">Date and Time (End):</label>
+            <input class="form-control" type="datetime-local" formControlName="dateTimeEnd" (change)="dateTimeEndChange($event)">
           </div>
           <div class="form-group col-md-6">
             <label for="duration">Duration:</label>
@@ -37,8 +41,8 @@
           </div>
         </div>
         <div class="alert alert-success">
-          According to your selection, the test will be scheduled at:
-          <b>{{this.dateTimeUTC | date:'EEEE, MMMM d, y, h:mm a'}} </b>
+          Test will be obtainable from:
+          <b>{{this.dateTimeUTC | date:'EEEE, MMMM d, y, h:mm a'}} </b> to <b>{{this.dateTimeEndUTC | date:'EEEE, MMMM d, y, h:mm a'}} </b>
           <!-- <b>{{this.dateTimeUTC | date:'dd-MM-yyyy hh:mm a':'+0500'}} </b> -->
         </div>
       </div>
