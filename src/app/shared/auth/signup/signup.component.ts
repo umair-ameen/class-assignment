@@ -12,7 +12,6 @@ import { SharedService } from '../../../shared/shared.service';
 })
 export class SignupComponent implements OnInit {
   roles: string[] = ['student', 'teacher'];
-  departments: string[] = ['BSIT', 'BBA'];
   role: string = this.roles[0];
   batches: string[] = [];
   rollNos: string[] = [];
@@ -53,7 +52,7 @@ export class SignupComponent implements OnInit {
     delete userInfo.terms;
     let length = this.rollNos.length - 1;
     if (this.role == 'student') {
-      userInfo.rollNo = userInfo.batch + userInfo.department + userInfo.number;
+      userInfo.rollNo = userInfo.batch + userInfo.number;
       userInfo.role = 'student';
       for (let i = 0; i <= length; i++) {
         if (this.rollNos[i] == userInfo.rollNo) {

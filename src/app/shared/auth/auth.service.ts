@@ -42,7 +42,6 @@ export class AuthService {
                 userName: userInfo.name,
                 rollNo: userInfo.rollNo,
                 role: userInfo.role,
-                department: userInfo.department,
                 batch: userInfo.batch,
                 uid: this.uid
             });
